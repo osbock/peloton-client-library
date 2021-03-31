@@ -4,8 +4,15 @@ import matplotlib.pyplot as plt
 
 from peloton import PelotonWorkout
 workouts = PelotonWorkout.list()
-workout = workouts[2]
-metrics = workout.metrics
-resistance = metrics.resistance.values
-plt.plot(resistance)
+#grab the first cycling workout, other types don't have resistance
+for workout in workouts:
+    if workout.metrics_type == 'cycling':
+        metrics = workout.metrics
+        resistance = metrics.resistance
+        break
+
+plt.plot(resistance.values)
+plt.show()
+
+    
     
