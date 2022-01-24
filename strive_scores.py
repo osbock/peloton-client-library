@@ -3,17 +3,30 @@ workouts = PelotonWorkout.list()
 #grab the first cycling workout, other types don't have resistance
 strive_record = 0.0
 workout_title = ""
-record_workout =""
+records = {
+    '5'  : { 'Class' : "", 'Strive': 0.0},
+    '10' : { 'Class' : "", 'Strive': 0.0},
+    '15' : { 'Class' : "", 'Strive': 0.0},
+    '20' : { 'Class' : "", 'Strive': 0.0},
+    '30' : { 'Class' : "", 'Strive': 0.0},
+    '45' : { 'Class' : "", 'Strive': 0.0},
+    '60' : { 'Class' : "", 'Strive': 0.0},
+    '75' : { 'Class' : "", 'Strive': 0.0},
+    '90' : { 'Class' : "", 'Strive': 0.0}
+    }
+
 for workout in workouts:
     if workout.metrics_type == 'cycling':
         if workout.strive_score is not None:
+            duration = workout.ride.duration/60
+            ride_length = "%d" %duration
             strive_score = workout.strive_score
-            workout_title ="%s\n %s" % (workout.ride.title,workout.start_time.strftime("%m/%d.%Y"))
+            workout_title ="%s on %s" % (workout.ride.title,workout.start_time.strftime("%m/%d/%Y"))
             print(workout_title)
             print("strive_score: %0.1f" %strive_score)
-            if strive_score > strive_record:
-                strive_record = strive_score
-                record_workout = workout_title
-print("strive record: %s \n strive_score: %f" % (record_workout, strive_record))         
+            if strive_score > records[ride_length]['Strive']:
+                records[ride_length]['Class'] = workout_title
+                records[ride_length]['Strive'] = strive_score
+print(records)
     
     
