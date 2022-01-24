@@ -358,6 +358,8 @@ class PelotonWorkout(PelotonObject):
         PelotonWorkout.get()
         PelotonWorkout.list()
         """
+#        print("PelotonWorkout:")
+#        print(kwargs)
 
         self.id = kwargs.get('id')
 
@@ -381,6 +383,15 @@ class PelotonWorkout(PelotonObject):
 
         # What exercise type is this?
         self.fitness_discipline = kwargs.get('fitness_discipline')
+
+        # Load strive score
+        if kwargs.get('effort_zones') is not None:
+            self.effort_zones = kwargs.get('effort_zones')
+            self.strive_score = self.effort_zones['total_effort_points']
+        else:
+            self.strive_score = None
+            self.effort_zones = None
+
 
         # Workout status (complete, in progress, etc)
         self.status = kwargs.get('status')
@@ -431,6 +442,7 @@ class PelotonWorkout(PelotonObject):
                 # Load our achievements
                 self.achievements = workout.achievements
 
+
                 # Return the value of the requested attribute
                 return getattr(self, attr)
 
@@ -469,6 +481,8 @@ class PelotonRide(PelotonObject):
     """
 
     def __init__(self, **kwargs):
+#        print("PelotonRide:")
+#        print(kwargs)
 
         self.title = kwargs.get('title')
         self.id = kwargs.get('id')
@@ -494,6 +508,8 @@ class PelotonMetric(PelotonObject):
     """
 
     def __init__(self, **kwargs):
+#        print("PelotonMetric:")
+#        print(kwargs)
 
         self.values = kwargs.get('values')
         self.average = kwargs.get('average_value')
@@ -511,6 +527,8 @@ class PelotonMetricSummary(PelotonObject):
     """
 
     def __init__(self, **kwargs):
+#       print("PelotonMetricSummary:")
+#       print(kwargs)
 
         self.name = kwargs.get('display_name')
         self.value = kwargs.get('value')
@@ -528,6 +546,8 @@ class PelotonWorkoutMetrics(PelotonObject):
     def __init__(self, **kwargs):
         """ Take a metrics set and objectify it
         """
+#        print("PelotonWorkoutMetrics:")
+#        print(kwargs)
 
         self.workout_duration = kwargs.get('duration')
         self.fitness_discipline = kwargs.get('segment_list')[0]['metrics_type']
@@ -596,8 +616,9 @@ class PelotonWorkoutAchievement(PelotonObject):
     """ Class that represents a single achievement that a user
         earned during the workout
     """
-
     def __init__(self, **kwargs):
+#        print("PelotonWorkoutAchievement:")
+#        print(kwargs)
 
         self.slug = kwargs.get('slug')
         self.description = kwargs.get('description')
