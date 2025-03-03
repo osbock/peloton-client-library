@@ -491,6 +491,10 @@ class PelotonRide(PelotonObject):
         self.id = kwargs.get('id')
         self.description = kwargs.get('description')
         self.duration = kwargs.get('duration')
+        if kwargs.get('original_air_time') is not None:
+            self.original_air_time = datetime.fromtimestamp(
+                kwargs.get('original_air_time'), timezone.utc)
+
 
         # When we make this Ride call from the workout factory, there
         # is no instructor data
